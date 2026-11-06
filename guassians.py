@@ -90,7 +90,6 @@ def draw_gaussian_splat(target_surface, center_plx, r_major, r_minor, angle_deg,
     ellipse_surf = pygame.Surface((int_w, int_h), pygame.SRCALPHA)
     surf_center = (int_w // 2, int_h // 2)
 
-    # Render concentric rings with fading alpha to simulate the Bell curve falloff
     rings = 8
     for i in range(rings, 0, -1):
         fraction = i / rings
@@ -104,9 +103,7 @@ def draw_gaussian_splat(target_surface, center_plx, r_major, r_minor, angle_deg,
         rect.center = surf_center
         pygame.draw.ellipse(ellipse_surf, color, rect)
 
-    # Pygame's rotozoom rotates counter-clockwise
-    # Invert angle because Pygame's Y-axis points down
     rotated_surf = pygame.transform.rotozoom(ellipse_surf, -angle_deg, 1.0)
 
-    dest_rect = rotated_surf.get_rect(center=center_px)
+    dest_rect = rotated_surf.get_rect(center=center_plx)
     target_surface.blit(rotated_surf, dest_rect)
